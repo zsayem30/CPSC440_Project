@@ -1,0 +1,32 @@
+clear; clc;
+
+topLevelFolder = 'C:\Users\sayem\Documents\Intuitive Surgical Dataset\Matlab Processing\SurTask_Pairs_ALL_DATA';
+files = dir(topLevelFolder);
+disp(files);
+dirFlags = [files.isdir];
+all_files = files(~dirFlags);
+
+for i = 1:1
+    s = load(fullfile(topLevelFolder, all_files(i).name));
+    [pathstr,name,ext] = fileparts(all_files(i).name);
+    filename = strcat(name, ".xlsx");
+    data = s.dataTrain;
+    data(any(isnan(data), 2), :) = [];
+    figure;
+    scatter(data(:, 1), data(:, 2))
+    hold on;
+    scatter(data(:, 1), data(:, 9))
+    hold on;
+    scatter(data(:, 1), data(:, 16))
+    hold on;
+    scat(data(:, 1), data(:, 23))
+    hold off;
+    legend({'PSM1','PSM2', 'PSM3', 'ECM'},'Location','southwest')
+        
+%     data_cols = s.dataTrain_cols;
+%     data_cells = num2cell(data);
+%     output = [data_cols; data_cells];
+%     writecell(output, filename);
+end
+
+
